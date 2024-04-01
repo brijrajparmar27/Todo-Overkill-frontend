@@ -67,28 +67,24 @@ export const Auth = () => {
           ref={scope}
         >
           <div className="flex-1">
-            {!isLogin && (
-              <AnimatePresence>
-                <LoginPrompt toogleLogin={toogleLogin} />
-              </AnimatePresence>
-            )}
+            <AnimatePresence>
+              {!isLogin && <LoginPrompt toogleLogin={toogleLogin} />}
+            </AnimatePresence>
           </div>
           <div className="flex-1">
-            {isLogin && (
-              <AnimatePresence >
-                <SignupPrompt toogleLogin={toogleLogin} />
-              </AnimatePresence>
-            )}
+            <AnimatePresence>
+              {isLogin && <SignupPrompt toogleLogin={toogleLogin} />}
+            </AnimatePresence>
           </div>
         </div>
-        {/* <motion.div
+        <motion.div
           className="h-full w-[50%] bg-white rounded-lg z-20 p-8 flex flex-col gap-3 justify-center "
           layout
           transition={spring}
         >
           {isLogin && <Login />}
           {!isLogin && <Signup />}
-        </motion.div> */}
+        </motion.div>
       </motion.div>
       <motion.div
         className="fixed z-50 top-14 left-14 font-bold text-title flex justify-center items-center gap-[1px] text-green"
