@@ -2,6 +2,7 @@ import { GoCheckCircleFill } from "react-icons/go";
 import { GoCircle } from "react-icons/go";
 import { RiCloseCircleFill } from "react-icons/ri";
 import axios from "../../../Axios/axios";
+import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import {
   deleteTodos,
@@ -10,6 +11,29 @@ import {
 } from "../../../redux/features/todoSlice";
 
 export const Todo = ({ each }) => {
+  const backdropVariant = {
+    hide: {
+      x: -1000,
+      opacity: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    show: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    close: {
+      x: -1000,
+      opacity: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
   const dispach = useDispatch();
   const handleToogle = async () => {
     console.log(each);
@@ -21,7 +45,13 @@ export const Todo = ({ each }) => {
     dispach(deleteTodos({ id: each._id }));
   };
   return (
-    <div className="flex items-center w-full justify-between px-3 h-12">
+    <motion.div
+      className="flex items-center w-full justify-between px-3 h-12"
+      variants={backdropVariant}
+      initial="hide"
+      animate="show"
+      exit="close"
+    >
       <div className="flex items-center gap-2">
         {each.completed ? (
           <GoCheckCircleFill
@@ -41,6 +71,6 @@ export const Todo = ({ each }) => {
         className="text-title text-gray cursor-pointer"
         onClick={handleDelete}
       />
-    </div>
+    </motion.div>
   );
 };

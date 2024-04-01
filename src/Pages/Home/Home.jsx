@@ -5,6 +5,8 @@ import { GoCheckCircleFill } from "react-icons/go";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ghost from "../../assets/ghost.json";
+import { motion, AnimatePresence } from "framer-motion";
+
 import {
   createTodos,
   fetchTodos,
@@ -48,12 +50,33 @@ export const Home = () => {
     return formattedDate;
   };
 
+  const sectionVariant = {
+    hide: {
+      y: -100,
+      opacity: 0,
+    },
+    show: {
+      y: 0,
+      opacity: 1,
+    },
+    close: {
+      y: -100,
+      opacity: 0,
+    },
+  };
+
   return (
     <div className="FitPage bg-gray flex flex-col overflow-hidden">
-      {showFolderSwitcher && (
-        <FolderSwitcher toogleShow={setShowFolderSwitcher} />
-      )}
-      <div className="flex-1 max-h-[30%] gradient flex justify-center">
+      <AnimatePresence>
+        {showFolderSwitcher && (
+          <FolderSwitcher toogleShow={setShowFolderSwitcher} />
+        )}
+      </AnimatePresence>
+      <motion.div
+        className="flex-1 max-h-[30%] gradient flex justify-center"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+      >
         <div className="w-4/5 h-fit mt-10 flex justify-between items-center">
           <div className="flex gap-8 ">
             <div className="font-bold text-title flex justify-center items-center gap-[1px] text-white">
@@ -70,10 +93,18 @@ export const Home = () => {
           </div>
           <div className="text-content text-white">{getCurrentDate()}</div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="flex-1 flex w-full justify-center">
-        <div className="w-4/5 bg-white h-fit rounded-xl m-[-90px]">
+      <motion.div
+        layout
+        className="flex-1 flex w-full justify-center"
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+      >
+        <motion.div
+          className="w-4/5 bg-white h-fit rounded-xl m-[-90px]"
+          layout
+        >
           <form
             className="flex w-full p-5 h-[90px] justify-center items-center gap-3 border-b border-gray"
             onSubmit={handleNoteAdd}
@@ -88,35 +119,61 @@ export const Home = () => {
             />
           </form>
 
-          <div className="min-h-[300px] p-5 flex flex-col">
-            {pending?.length > 0 && (
-              <div className="">
-                <p className="text-content">to do</p>
-                <div className="flex flex-col">
-                  {pending.map((each) => {
-                    return <Todo each={each} key={each._id} />;
-                  })}
-                </div>
-              </div>
-            )}
+          <motion.div
+            className="min-h-[300px] p-5 flex flex-col overflow-x-hidden"
+            layout
+          >
+            <AnimatePresence mode="wait">
+              {pending?.length > 0 && (
+                <motion.div
+                  layout
+                  className=""
+                  variants={sectionVariant}
+                  initial="hide"
+                  animate="show"
+                  exit="close"
+                >
+                  <p className="text-content">to do</p>
+                  <motion.div className="flex flex-col" layout>
+                    <AnimatePresence>
+                      {pending.map((each) => {
+                        return <Todo each={each} key={each._id} />;
+                      })}
+                    </AnimatePresence>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            {completed?.length > 0 && (
-              <div>
-                <p className="text-content">done</p>
-                <div>
-                  {completed.map((each) => {
-                    return <Todo each={each} key={each._id} />;
-                  })}
-                </div>
-              </div>
-            )}
+            <AnimatePresence mode="wait">
+              {completed?.length > 0 && (
+                <motion.div
+                  layout
+                  variants={sectionVariant}
+                  initial="hide"
+                  animate="show"
+                  exit="close"
+                >
+                  <p className="text-content">done</p>
+                  <motion.div layout>
+                    <AnimatePresence>
+                      {completed.map((each) => {
+                        return <Todo each={each} key={each._id} />;
+                      })}
+                    </AnimatePresence>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            {completed?.length == 0 && pending?.length == 0 && (
-              <LottiePlayer animationData={ghost} />
-            )}
-          </div>
-        </div>
-      </div>
+            <AnimatePresence>
+              {completed?.length == 0 && pending?.length == 0 && (
+                <LottiePlayer animationData={ghost} />
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
