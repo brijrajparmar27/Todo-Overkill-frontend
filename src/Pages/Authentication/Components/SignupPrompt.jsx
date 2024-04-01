@@ -2,21 +2,18 @@ import { motion } from "framer-motion";
 export const SignupPrompt = ({ toogleLogin }) => {
   const popupVariant = {
     hide: {
-      opacity: 0,
-      y: -50
+      x: -150,
+      transition: { stiffness: 100, duration: 0.5 },
     },
     show: {
-      opacity: 1,
-      y: 0
+      x: 0,
+      transition: { stiffness: 100, duration: 0.5, delay: 0.1 },
     },
     close: {
-      opacity: 0,
-      y: -50,
-      transition: {
-        duration: 0.1
-      }
-    }
-  }
+      x: -150,
+      transition: { stiffness: 100, duration: 0.5 },
+    },
+  };
   return (
     <motion.div
       variants={popupVariant}
