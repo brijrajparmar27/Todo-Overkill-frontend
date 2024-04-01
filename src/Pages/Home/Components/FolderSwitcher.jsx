@@ -20,7 +20,7 @@ export const FolderSwitcher = ({ toogleShow }) => {
   }
   return (
     <div
-      className="fixed top-0 left-0 FitPage bg-blackglass flex justify-center items-center"
+      className="fixed top-0 left-0 FitPage bg-blackglass flex justify-center items-center z-50"
       onClick={handleClose}
     >
       <div className="bg-white h-4/5 w-2/4 rounded-xl" onClick={preventPropagation}>

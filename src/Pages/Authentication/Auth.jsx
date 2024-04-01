@@ -66,12 +66,12 @@ export const Auth = () => {
           className="h-full w-full forest-gradient absolute top-0 left-0 z-10 flex"
           ref={scope}
         >
-          <div className="flex-1">
+          <div className="flex-1 overflow-hidden">
             <AnimatePresence>
               {!isLogin && <LoginPrompt toogleLogin={toogleLogin} />}
             </AnimatePresence>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 overflow-hidden">
             <AnimatePresence>
               {isLogin && <SignupPrompt toogleLogin={toogleLogin} />}
             </AnimatePresence>
