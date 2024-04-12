@@ -56,6 +56,9 @@ const userSlice = createSlice({
       state.userObj = null;
       sessionStorage.removeItem("userObj");
     },
+    clearAuthError: (state, { payload }) => {
+      state.Error = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(loginUser.fulfilled, (state, { payload }) => {
@@ -89,7 +92,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setCachedUser, setUser, logoutUser } = userSlice.actions;
+export const { setCachedUser, setUser, logoutUser, clearAuthError } =
+  userSlice.actions;
 export default userSlice.reducer;
-// export const getCompletedTodos = (state) => state.todoReducer.completed;
-// export const getPendingTodos = (state) => state.todoReducer.pending;

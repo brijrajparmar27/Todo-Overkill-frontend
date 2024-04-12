@@ -3,16 +3,18 @@ import shape1 from "../../assets/shape1.svg";
 import shape2 from "../../assets/shape2.svg";
 import { AnimatePresence, motion, useAnimate } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Login } from "./Components/Login";
 import { Signup } from "./Components/Signup";
 import { LoginPrompt } from "./Components/LoginPrompt";
 import { SignupPrompt } from "./Components/SignupPrompt";
 import { useNavigate } from "react-router-dom";
+import { clearAuthError } from "../../redux/features/userSlice";
 
 export const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const user = useSelector((state) => state.userReducer);
 
@@ -23,6 +25,7 @@ export const Auth = () => {
   };
 
   const toogleLogin = () => {
+    dispatch(clearAuthError());
     setIsLogin((prev) => {
       return !prev;
     });
@@ -32,7 +35,7 @@ export const Auth = () => {
     <motion.div
       className="FitPage flex justify-center items-center overflow-hidden"
       transition={{
-        when: "beforeChildren", //use this instead of delay
+        when: "beforeChildren",
         staggerChildren: 1,
       }}
     >

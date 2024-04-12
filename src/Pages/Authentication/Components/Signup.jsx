@@ -54,7 +54,7 @@ export const Signup = () => {
           required
         />
       </div>
-      <p>{Error}</p>
+      <p className="text-red font-semibold">{Error}</p>
       <button
         className="border border-solid text-white text-subititle bg-green px-10 py-2 rounded-xl mt-5 w-full"
         type="submit"

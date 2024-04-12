@@ -42,6 +42,7 @@ export const Login = () => {
           required
         />
       </div>
+      <p className="text-red font-semibold">{Error}</p>
       <button
         type="submit"
         className="border border-solid text-white text-subititle bg-green px-10 py-2 rounded-xl mt-5 w-full"
