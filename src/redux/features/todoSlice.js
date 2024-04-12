@@ -14,7 +14,9 @@ export const fetchTodos = createAsyncThunk(
   "todo/get",
   async ({ completed }) => {
     try {
-      let { data } = await axios.get(`/${completed ? "completed" : "pending"}`);
+      let { data } = await axios.get(
+        `todo/${completed ? "completed" : "pending"}`
+      );
       return { data, completed };
     } catch (err) {
       console.log(err);
@@ -24,7 +26,7 @@ export const fetchTodos = createAsyncThunk(
 
 export const deleteTodos = createAsyncThunk("todo/delete", async ({ id }) => {
   try {
-    let { data } = await axios.delete(`/${id}`);
+    let { data } = await axios.delete(`todo/${id}`);
     return data;
   } catch (err) {
     console.log(err);
@@ -35,7 +37,7 @@ export const toogleTodos = createAsyncThunk(
   "todo/toogle",
   async ({ id, status }) => {
     try {
-      let { data } = await axios.patch(`/${id}`, { completed: status });
+      let { data } = await axios.patch(`todo/${id}`, { completed: status });
       return data;
     } catch (err) {
       console.log(err);
@@ -45,7 +47,7 @@ export const toogleTodos = createAsyncThunk(
 
 export const createTodos = createAsyncThunk("todo/create", async ({ text }) => {
   try {
-    let { data } = await axios.post(`/`, { text });
+    let { data } = await axios.post(`todo/`, { text });
     return data;
   } catch (err) {
     console.log(err);

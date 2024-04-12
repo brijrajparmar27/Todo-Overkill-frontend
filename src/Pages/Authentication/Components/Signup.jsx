@@ -1,39 +1,54 @@
+import { useDispatch } from "react-redux";
+import { signupUser } from "../../../redux/features/userSlice";
 export const Signup = () => {
+  const dispach = useDispatch();
+  const handleSignup = (e) => {
+    e.preventDefault();
+    let data = {
+      username: e.target.username.value.trim(),
+      email: e.target.email.value.trim(),
+      password: e.target.pass.value.trim(),
+    };
+    dispach(signupUser(data));
+  };
   return (
-    <div className="flex flex-col gap-5">
-      <h1 className="text-title font-bold text-green">SignIn</h1>
+    <form className="flex flex-col gap-5" onSubmit={handleSignup}>
+      <h1 className="text-title font-bold text-green">SignUp</h1>
       <div>
-        <label for="first_name" class="auth-label">
+        <label htmlFor="username" className="auth-label">
           Username
         </label>
         <input
           type="text"
-          id="first_name"
-          class="auth-textfeils"
+          id="username"
+          name="username"
+          className="auth-textfeils"
           placeholder="John"
           required
         />
       </div>
       <div>
-        <label for="first_name" class="auth-label">
+        <label htmlFor="email" className="auth-label">
           Email Address
         </label>
         <input
           type="text"
-          id="first_name"
-          class="auth-textfeils"
+          id="email"
+          name="email"
+          className="auth-textfeils"
           placeholder="John"
           required
         />
       </div>
       <div>
-        <label for="first_name" class="auth-label">
+        <label htmlFor="pass" className="auth-label">
           Password
         </label>
         <input
           type="text"
-          id="first_name"
-          class="auth-textfeils"
+          id="pass"
+          name="pass"
+          className="auth-textfeils"
           placeholder="John"
           required
         />
@@ -44,6 +59,6 @@ export const Signup = () => {
       >
         SignUp
       </button>
-    </div>
+    </form>
   );
 };

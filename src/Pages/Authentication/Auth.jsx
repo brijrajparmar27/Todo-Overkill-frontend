@@ -2,15 +2,19 @@ import { GoCheckCircleFill } from "react-icons/go";
 import shape1 from "../../assets/shape1.svg";
 import shape2 from "../../assets/shape2.svg";
 import { AnimatePresence, motion, useAnimate } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Login } from "./Components/Login";
 import { Signup } from "./Components/Signup";
 import { LoginPrompt } from "./Components/LoginPrompt";
 import { SignupPrompt } from "./Components/SignupPrompt";
+import { useNavigate } from "react-router-dom";
 
 export const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [scope, animate] = useAnimate();
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.userReducer);
 
   const spring = {
     type: "spring",
@@ -62,10 +66,7 @@ export const Auth = () => {
           flexDirection: isLogin ? "row" : "row-reverse",
         }}
       >
-        <div
-          className="h-full w-full forest-gradient absolute top-0 left-0 z-10 flex"
-          ref={scope}
-        >
+        <div className="h-full w-full forest-gradient absolute top-0 left-0 z-10 flex">
           <div className="flex-1 overflow-hidden">
             <AnimatePresence>
               {!isLogin && <LoginPrompt toogleLogin={toogleLogin} />}

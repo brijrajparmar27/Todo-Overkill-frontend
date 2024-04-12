@@ -3,26 +3,26 @@ export const Login = () => {
     <div className="flex flex-col gap-5">
       <h1 className="text-title font-bold text-green">LogIn</h1>
       <div>
-        <label for="first_name" class="auth-label">
+        <label htmlFor="first_name" className="auth-label">
           Username
         </label>
         <input
           type="text"
           id="first_name"
-          class="auth-textfeils"
+          className="auth-textfeils"
           placeholder="John"
           required
         />
       </div>
 
       <div>
-        <label for="first_name" class="auth-label">
+        <label htmlFor="first_name" className="auth-label">
           Password
         </label>
         <input
           type="text"
           id="first_name"
-          class="auth-textfeils"
+          className="auth-textfeils"
           placeholder="John"
           required
         />

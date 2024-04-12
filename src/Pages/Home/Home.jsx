@@ -135,7 +135,7 @@ export const Home = () => {
                 >
                   <p className="text-content">to do</p>
                   <motion.div className="flex flex-col" layout>
-                    <AnimatePresence>
+                    <AnimatePresence mode="popLayout">
                       {pending.map((each) => {
                         return <Todo each={each} key={each._id} />;
                       })}
@@ -156,7 +156,7 @@ export const Home = () => {
                 >
                   <p className="text-content">done</p>
                   <motion.div layout>
-                    <AnimatePresence>
+                    <AnimatePresence mode="popLayout">
                       {completed.map((each) => {
                         return <Todo each={each} key={each._id} />;
                       })}

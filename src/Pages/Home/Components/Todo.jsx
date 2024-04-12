@@ -36,7 +36,6 @@ export const Todo = ({ each }) => {
   };
   const dispach = useDispatch();
   const handleToogle = async () => {
-    console.log(each);
     await dispach(toogleTodos({ id: each._id, status: !each.completed }));
     dispach(fetchTodos({ completed: true }));
     dispach(fetchTodos({ completed: false }));
