@@ -1,7 +1,8 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signupUser } from "../../../redux/features/userSlice";
 export const Signup = () => {
   const dispach = useDispatch();
+  const { loading, Error } = useSelector((state) => state.userReducer);
   const handleSignup = (e) => {
     e.preventDefault();
     let data = {
@@ -23,7 +24,7 @@ export const Signup = () => {
           id="username"
           name="username"
           className="auth-textfeils"
-          placeholder="John"
+          placeholder="JohnD"
           required
         />
       </div>
@@ -36,7 +37,7 @@ export const Signup = () => {
           id="email"
           name="email"
           className="auth-textfeils"
-          placeholder="John"
+          placeholder="John@yupmail.com"
           required
         />
       </div>
@@ -49,13 +50,14 @@ export const Signup = () => {
           id="pass"
           name="pass"
           className="auth-textfeils"
-          placeholder="John"
+          placeholder="Password"
           required
         />
       </div>
+      <p>{Error}</p>
       <button
         className="border border-solid text-white text-subititle bg-green px-10 py-2 rounded-xl mt-5 w-full"
-        onClick={() => {}}
+        type="submit"
       >
         SignUp
       </button>

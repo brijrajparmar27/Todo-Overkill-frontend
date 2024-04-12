@@ -14,6 +14,7 @@ import {
   getPendingTodos,
 } from "../../redux/features/todoSlice";
 import { LottiePlayer } from "../../Common/LottiePlayer";
+import { logoutUser } from "../../redux/features/userSlice";
 
 export const Home = () => {
   const [showFolderSwitcher, setShowFolderSwitcher] = useState(false);
@@ -65,6 +66,10 @@ export const Home = () => {
     },
   };
 
+  const logout = ()=>{
+    dispach(logoutUser())
+  }
+
   return (
     <div className="FitPage bg-gray flex flex-col overflow-hidden">
       <AnimatePresence>
@@ -76,6 +81,7 @@ export const Home = () => {
         className="flex-1 max-h-[30%] gradient flex justify-center"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
+        onClick={logout}
       >
         <div className="w-4/5 h-fit mt-10 flex justify-between items-center">
           <div className="flex gap-8 ">

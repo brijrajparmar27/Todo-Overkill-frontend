@@ -1,38 +1,53 @@
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../../redux/features/userSlice";
+
 export const Login = () => {
+  const dispach = useDispatch();
+  const { loading, Error } = useSelector((state) => state.userReducer);
+  const handleLogin = (e) => {
+    e.preventDefault();
+    let data = {
+      email: e.target.email.value.trim(),
+      password: e.target.pass.value.trim(),
+    };
+    dispach(loginUser(data));
+  };
   return (
-    <div className="flex flex-col gap-5">
+    <form className="flex flex-col gap-5" onSubmit={handleLogin}>
       <h1 className="text-title font-bold text-green">LogIn</h1>
       <div>
-        <label htmlFor="first_name" className="auth-label">
-          Username
+        <label htmlFor="email" className="auth-label">
+          email
         </label>
         <input
           type="text"
-          id="first_name"
+          id="email"
+          name="email"
+          placeholder="John@yupmail.com"
           className="auth-textfeils"
-          placeholder="John"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="first_name" className="auth-label">
+        <label htmlFor="pass" className="auth-label">
           Password
         </label>
         <input
           type="text"
-          id="first_name"
+          id="pass"
+          name="pass"
+          placeholder="Password"
           className="auth-textfeils"
-          placeholder="John"
           required
         />
       </div>
       <button
+        type="submit"
         className="border border-solid text-white text-subititle bg-green px-10 py-2 rounded-xl mt-5 w-full"
-        onClick={() => {}}
       >
         LogIn
       </button>
-    </div>
+    </form>
   );
 };
