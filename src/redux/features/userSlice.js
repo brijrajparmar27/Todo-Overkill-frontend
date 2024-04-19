@@ -18,7 +18,7 @@ export const loginUser = createAsyncThunk(
       });
       sessionStorage.setItem("userObj", JSON.stringify(response.data));
       return response.data;
-    } catch (err) {
+    } catch (error) {
       throw rejectWithValue(error.response.data.error);
     }
   }

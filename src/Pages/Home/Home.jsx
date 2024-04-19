@@ -1,5 +1,5 @@
 import { IoFolderOpen } from "react-icons/io5";
-import { Todo } from "./Components/Todo";
+import Todo from "./Components/Todo";
 import { FolderSwitcher } from "./Components/FolderSwitcher";
 import { GoCheckCircleFill } from "react-icons/go";
 import { useEffect, useState } from "react";
@@ -23,6 +23,7 @@ export const Home = () => {
   const pending = useSelector(getPendingTodos);
 
   useEffect(() => {
+    console.log("fetch");
     dispach(fetchTodos({ completed: true }));
     dispach(fetchTodos({ completed: false }));
   }, []);
@@ -66,9 +67,9 @@ export const Home = () => {
     },
   };
 
-  const logout = ()=>{
-    dispach(logoutUser())
-  }
+  const logout = () => {
+    dispach(logoutUser());
+  };
 
   return (
     <div className="FitPage bg-gray flex flex-col overflow-hidden">
@@ -81,11 +82,13 @@ export const Home = () => {
         className="flex-1 max-h-[30%] gradient flex justify-center"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        onClick={logout}
       >
         <div className="w-4/5 h-fit mt-10 flex justify-between items-center">
           <div className="flex gap-8 ">
-            <div className="font-bold text-title flex justify-center items-center gap-[1px] text-white">
+            <div
+              className="font-bold text-title flex justify-center items-center gap-[1px] text-white"
+              onClick={logout}
+            >
               <h1>TOD</h1>
               <GoCheckCircleFill className="text-subititle" />
             </div>

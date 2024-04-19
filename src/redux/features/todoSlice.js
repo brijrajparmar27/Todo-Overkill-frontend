@@ -12,7 +12,8 @@ const initialState = {
 
 export const fetchTodos = createAsyncThunk(
   "todo/get",
-  async ({ completed }) => {
+  async ({ completed }, { getState }) => {
+    const { token, _id } = getState().userReducer.userObj;
     try {
       let { data } = await axios.get(
         `todo/${completed ? "completed" : "pending"}`
@@ -24,20 +25,12 @@ export const fetchTodos = createAsyncThunk(
   }
 );
 
-export const deleteTodos = createAsyncThunk("todo/delete", async ({ id }) => {
-  try {
-    let { data } = await axios.delete(`todo/${id}`);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-export const toogleTodos = createAsyncThunk(
-  "todo/toogle",
-  async ({ id, status }) => {
+export const deleteTodos = createAsyncThunk(
+  "todo/delete",
+  async ({ id }, { getState }) => {
+    const { token, _id } = getState().userReducer.userObj;
     try {
-      let { data } = await axios.patch(`todo/${id}`, { completed: status });
+      let { data } = await axios.delete(`todo/${id}`);
       return data;
     } catch (err) {
       console.log(err);
@@ -45,14 +38,33 @@ export const toogleTodos = createAsyncThunk(
   }
 );
 
-export const createTodos = createAsyncThunk("todo/create", async ({ text }) => {
-  try {
-    let { data } = await axios.post(`todo/`, { text });
-    return data;
-  } catch (err) {
-    console.log(err);
+export const toogleTodos = createAsyncThunk(
+  "todo/toogle",
+  async ({ id, status }, { getState }) => {
+    const { token, _id } = getState().userReducer.userObj;
+    let payload = { completed: status, token, userId: _id };
+    try {
+      let { data } = await axios.patch(`todo/${id}`, payload);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
   }
-});
+);
+
+export const createTodos = createAsyncThunk(
+  "todo/create",
+  async (data, { getState }) => {
+    const { token, _id } = getState().userReducer.userObj;
+    let payload = { ...data, token, userId: _id };
+    try {
+      let { data } = await axios.post(`todo/`, payload);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
 
 const todoSlice = createSlice({
   name: "todos",

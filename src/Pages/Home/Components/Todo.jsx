@@ -10,7 +10,7 @@ import {
   toogleTodos,
 } from "../../../redux/features/todoSlice";
 
-export const Todo = ({ each }) => {
+const Todo = ({ each }) => {
   const backdropVariant = {
     hide: {
       x: -1000,
@@ -73,3 +73,5 @@ export const Todo = ({ each }) => {
     </motion.div>
   );
 };
+
+export default Todo
