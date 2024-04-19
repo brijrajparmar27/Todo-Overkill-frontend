@@ -1,18 +1,14 @@
-import Lottie from "react-lottie";
+import "@lottiefiles/lottie-player";
 
 export const LottiePlayer = ({ animationData }) => {
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData,
-  };
   return (
     <div className="min-h-[inherit] min-w-[inherit] flex justify-center items-center">
-      <Lottie
-        options={defaultOptions}
-        height={300}
-        width={300}
-        isClickToPauseDisabled={true}
+      <lottie-player
+        autoplay
+        loop
+        mode="normal"
+        src={JSON.stringify(animationData)}
+        style={{ with: "300px", height: "300px" }}
       />
     </div>
   );
