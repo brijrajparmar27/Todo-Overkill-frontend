@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "../../Axios/axios";
+import Axios from "../../Axios/axios";
 
 const initialState = {
   isAuthReady: false,
@@ -12,7 +12,7 @@ export const loginUser = createAsyncThunk(
   "user/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post("user/login", {
+      const response = await Axios.post("user/login", {
         email,
         password,
       });
@@ -27,7 +27,7 @@ export const signupUser = createAsyncThunk(
   "user/signup",
   async ({ username, email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post("user/signup", {
+      const response = await Axios.post("user/signup", {
         username,
         email,
         password,
@@ -35,6 +35,7 @@ export const signupUser = createAsyncThunk(
       sessionStorage.setItem("userObj", JSON.stringify(response.data));
       return response.data;
     } catch (error) {
+      console.log(error);
       throw rejectWithValue(error.response.data.error);
     }
   }
@@ -52,7 +53,7 @@ const userSlice = createSlice({
     setUser: (state, { payload }) => {
       state.userObj = payload;
     },
-    logoutUser: (state, { payload }) => {
+    clearUser: (state, { payload }) => {
       state.userObj = null;
       sessionStorage.removeItem("userObj");
     },
@@ -92,6 +93,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setCachedUser, setUser, logoutUser, clearAuthError } =
+export const { setCachedUser, setUser, clearUser, clearAuthError } =
   userSlice.actions;
 export default userSlice.reducer;

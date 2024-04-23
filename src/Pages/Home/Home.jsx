@@ -8,24 +8,39 @@ import ghost from "../../assets/ghost.json";
 import { motion, AnimatePresence } from "framer-motion";
 
 import {
+  clearTodos,
   createTodos,
   fetchTodos,
   getCompletedTodos,
   getPendingTodos,
 } from "../../redux/features/todoSlice";
 import { LottiePlayer } from "../../Common/LottiePlayer";
-import { logoutUser } from "../../redux/features/userSlice";
+import { clearUser } from "../../redux/features/userSlice";
+import { clearFolders, findFolder } from "../../redux/features/folderSlice";
+import { STATUS_ALL, STATUS_PENDING } from "../../utils/constants";
 
 export const Home = () => {
   const [showFolderSwitcher, setShowFolderSwitcher] = useState(false);
   const dispach = useDispatch();
   const completed = useSelector(getCompletedTodos);
   const pending = useSelector(getPendingTodos);
+  const { selectedFolder } = useSelector((state) => state.folderReducer);
+
+  const fetchAllTodos = async () => {
+    dispach(fetchTodos({ status: STATUS_ALL }));
+  };
+
+  const fetchFolders = async () => {
+    return dispach(findFolder());
+  };
+
+  const initiateHome = async () => {
+    await fetchFolders();
+    fetchAllTodos();
+  };
 
   useEffect(() => {
-    console.log("fetch");
-    dispach(fetchTodos({ completed: true }));
-    dispach(fetchTodos({ completed: false }));
+    initiateHome();
   }, []);
 
   const toogleFolderSwitcher = () => {
@@ -36,8 +51,7 @@ export const Home = () => {
     e.preventDefault();
     let text = e.target.newNote.value.trim();
     e.target.reset();
-    await dispach(createTodos({ text }));
-    dispach(fetchTodos({ completed: false }));
+    dispach(createTodos({ text }));
   };
 
   const getCurrentDate = () => {
@@ -68,7 +82,9 @@ export const Home = () => {
   };
 
   const logout = () => {
-    dispach(logoutUser());
+    dispach(clearTodos());
+    dispach(clearFolders());
+    dispach(clearUser());
   };
 
   return (
@@ -96,7 +112,7 @@ export const Home = () => {
               className="bg-blackglass flex justify-center items-center rounded-md p-2 gap-5 cursor-pointer text-white"
               onClick={toogleFolderSwitcher}
             >
-              <p className="text-content">youtube</p>
+              <p className="text-content">{selectedFolder?.name}</p>
               <IoFolderOpen className="text-subititle" />
             </div>
           </div>

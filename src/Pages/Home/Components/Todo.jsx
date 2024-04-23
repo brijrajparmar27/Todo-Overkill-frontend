@@ -9,6 +9,7 @@ import {
   fetchTodos,
   toogleTodos,
 } from "../../../redux/features/todoSlice";
+import { STATUS_ALL } from "../../../utils/constants";
 
 const Todo = ({ each }) => {
   const backdropVariant = {
@@ -37,8 +38,7 @@ const Todo = ({ each }) => {
   const dispach = useDispatch();
   const handleToogle = async () => {
     await dispach(toogleTodos({ id: each._id, status: !each.completed }));
-    dispach(fetchTodos({ completed: true }));
-    dispach(fetchTodos({ completed: false }));
+    dispach(fetchTodos({ status: STATUS_ALL }));
   };
   const handleDelete = () => {
     dispach(deleteTodos({ id: each._id }));
@@ -74,4 +74,4 @@ const Todo = ({ each }) => {
   );
 };
 
-export default Todo
+export default Todo;

@@ -6,20 +6,21 @@ export default {
       fontFamily: {
         Montserrat: ["Montserrat", "sans-serif"],
       },
-      fontSize:{
+      fontSize: {
         title: "24px",
         subititle: "18px",
-        content: "16px"
+        content: "16px",
       },
     },
-    colors:{
+    colors: {
       black: "#000",
       white: "#FFFF",
       gray: "#d3d3d3",
       green: "#00ba6d",
       red: "#f44336",
-      blackglass: "#00000038"
-    }
+      blackglass: "#00000038",
+      lightgray: "#d3d3d330",
+    },
   },
   plugins: [],
 };

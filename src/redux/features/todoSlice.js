@@ -1,24 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "../../Axios/axios";
+import Axios from "../../Axios/axios";
 
 const initialState = {
   completed: [],
   pending: [],
-  folder: {
-    id: null,
-    name: null,
-  },
 };
 
 export const fetchTodos = createAsyncThunk(
   "todo/get",
-  async ({ completed }, { getState }) => {
-    const { token, _id } = getState().userReducer.userObj;
+  async ({ status }, { getState }) => {
+    const { selectedFolder } = getState().folderReducer;
     try {
-      let { data } = await axios.get(
-        `todo/${completed ? "completed" : "pending"}`
+      let { data } = await Axios.get(
+        `todo?status=${status}&&folder=${selectedFolder._id}`
       );
-      return { data, completed };
+      return { data, status };
     } catch (err) {
       console.log(err);
     }
@@ -28,9 +24,9 @@ export const fetchTodos = createAsyncThunk(
 export const deleteTodos = createAsyncThunk(
   "todo/delete",
   async ({ id }, { getState }) => {
-    const { token, _id } = getState().userReducer.userObj;
+    const { selectedFolder } = getState().folderReducer;
     try {
-      let { data } = await axios.delete(`todo/${id}`);
+      let { data } = await Axios.delete(`todo/${id}`);
       return data;
     } catch (err) {
       console.log(err);
@@ -41,10 +37,10 @@ export const deleteTodos = createAsyncThunk(
 export const toogleTodos = createAsyncThunk(
   "todo/toogle",
   async ({ id, status }, { getState }) => {
-    const { token, _id } = getState().userReducer.userObj;
-    let payload = { completed: status, token, userId: _id };
+    const { selectedFolder } = getState().folderReducer;
+    let payload = { completed: status, folderId: selectedFolder._id };
     try {
-      let { data } = await axios.patch(`todo/${id}`, payload);
+      let { data } = await Axios.patch(`todo/${id}`, payload);
       return data;
     } catch (err) {
       console.log(err);
@@ -55,10 +51,10 @@ export const toogleTodos = createAsyncThunk(
 export const createTodos = createAsyncThunk(
   "todo/create",
   async (data, { getState }) => {
-    const { token, _id } = getState().userReducer.userObj;
-    let payload = { ...data, token, userId: _id };
+    const { selectedFolder } = getState().folderReducer;
+    let payload = { ...data, folderId: selectedFolder._id };
     try {
-      let { data } = await axios.post(`todo/`, payload);
+      let { data } = await Axios.post(`todo/`, payload);
       return data;
     } catch (err) {
       console.log(err);
@@ -76,15 +72,20 @@ const todoSlice = createSlice({
     setPendingTodos: (state, { payload }) => {
       state.pending = payload;
     },
+    clearTodos: (state, { payload }) => {
+      state.pending = [];
+      state.completed = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchTodos.fulfilled, (state, { payload }) => {
       let updatedState = { ...state };
-      let { data, completed } = payload;
-      if (completed) {
-        updatedState.completed = data;
+      let { data, status } = payload;
+      if (["pending", "completed"].includes(status)) {
+        updatedState[status] = data[status];
       } else {
-        updatedState.pending = data;
+        updatedState.pending = data.pending;
+        updatedState.completed = data.completed;
       }
       return updatedState;
     });
@@ -102,7 +103,7 @@ const todoSlice = createSlice({
     });
 
     builder.addCase(createTodos.fulfilled, (state, { payload }) => {
-      console.log("fulfilled");
+      state.pending = payload;
     });
 
     builder.addCase(createTodos.pending, (state, { payload }) => {
@@ -125,7 +126,8 @@ const todoSlice = createSlice({
   },
 });
 
-export const { setCompletedTodos, setPendingTodos } = todoSlice.actions;
+export const { setCompletedTodos, setPendingTodos, clearTodos } =
+  todoSlice.actions;
 export default todoSlice.reducer;
 export const getCompletedTodos = (state) => state.todoReducer.completed;
 export const getPendingTodos = (state) => state.todoReducer.pending;
