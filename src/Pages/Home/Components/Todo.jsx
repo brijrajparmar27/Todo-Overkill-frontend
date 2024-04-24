@@ -10,31 +10,9 @@ import {
   toogleTodos,
 } from "../../../redux/features/todoSlice";
 import { STATUS_ALL } from "../../../utils/constants";
+import { backdropVariant } from "../Variants/TodoVariants";
 
 const Todo = ({ each }) => {
-  const backdropVariant = {
-    hide: {
-      x: -1000,
-      opacity: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-    show: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-    close: {
-      x: -1000,
-      opacity: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
   const dispach = useDispatch();
   const handleToogle = async () => {
     await dispach(toogleTodos({ id: each._id, status: !each.completed }));

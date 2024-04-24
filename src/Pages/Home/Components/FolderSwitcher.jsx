@@ -3,6 +3,11 @@ import { useDispatch } from "react-redux";
 import { createFolder, findFolder } from "../../../redux/features/folderSlice";
 import { useEffect, useState } from "react";
 import { FolderList } from "./FolderList";
+import {
+  FolderpopupVariant,
+  backdropVariant,
+  createPromptVariant,
+} from "../Variants/FolderVariants";
 
 export const FolderSwitcher = ({ toogleShow }) => {
   const [folderText, setFolderText] = useState("");
@@ -18,32 +23,6 @@ export const FolderSwitcher = ({ toogleShow }) => {
       clearTimeout(timer);
     };
   }, [folderText]);
-
-  const backdropVariant = {
-    hide: {
-      opacity: 0,
-    },
-    show: {
-      opacity: 1,
-    },
-    close: {
-      opacity: 0,
-    },
-  };
-  const popupVariant = {
-    hide: {
-      scale: 0,
-      opacity: 0,
-    },
-    show: {
-      scale: 1,
-      opacity: 1,
-    },
-    close: {
-      scale: 0,
-      opacity: 0,
-    },
-  };
 
   const handleClose = () => {
     toogleShow(false);
@@ -64,30 +43,6 @@ export const FolderSwitcher = ({ toogleShow }) => {
     setCreatePromptVisible(false);
   };
 
-  const createPromptVariant = {
-    hide: {
-      x: -100,
-      opacity: 0,
-      transition: {
-        duration: 0.25,
-      },
-    },
-    show: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.25,
-      },
-    },
-    close: {
-      x: 100,
-      opacity: 0,
-      transition: {
-        duration: 0.25,
-      },
-    },
-  };
-
   return (
     <motion.div
       variants={backdropVariant}
@@ -98,7 +53,7 @@ export const FolderSwitcher = ({ toogleShow }) => {
       onClick={handleClose}
     >
       <motion.div
-        variants={popupVariant}
+        variants={FolderpopupVariant}
         initial="hide"
         animate="show"
         exit="close"

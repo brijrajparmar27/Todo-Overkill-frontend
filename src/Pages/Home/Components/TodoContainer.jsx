@@ -1,21 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Todo from "./Todo";
+import { sectionVariant } from "../Variants/TodoVariants";
 
 export const TodoContainer = ({ list, title }) => {
-  const sectionVariant = {
-    hide: {
-      y: -100,
-      opacity: 0,
-    },
-    show: {
-      y: 0,
-      opacity: 1,
-    },
-    close: {
-      y: -100,
-      opacity: 0,
-    },
-  };
   return (
     <AnimatePresence mode="popLayout">
       {list?.length > 0 && (

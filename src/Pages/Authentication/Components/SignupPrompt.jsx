@@ -1,22 +1,9 @@
 import { motion } from "framer-motion";
+import { SigninpopupVariant } from "../Variants/AuthVariants";
 export const SignupPrompt = ({ toogleLogin }) => {
-  const popupVariant = {
-    hide: {
-      x: -150,
-      transition: { stiffness: 100, duration: 0.5 },
-    },
-    show: {
-      x: 0,
-      transition: { stiffness: 100, duration: 0.5, delay: 0.1 },
-    },
-    close: {
-      x: -150,
-      transition: { stiffness: 100, duration: 0.5 },
-    },
-  };
   return (
     <motion.div
-      variants={popupVariant}
+      variants={SigninpopupVariant}
       initial="hide"
       animate="show"
       exit="close"
