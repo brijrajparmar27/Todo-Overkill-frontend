@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Axios from "../../Axios/axios";
+import { toast } from "react-toastify";
 
 const initialState = {
   selectedFolder: null,
@@ -43,23 +44,21 @@ const folderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(createFolder.fulfilled, (state, { payload }) => {
+      toast.success("Folder Created");
       state.folderList = payload;
     });
-    builder.addCase(createFolder.pending, (state, { payload }) => {
-      console.log("loading");
-    });
+    builder.addCase(createFolder.pending, (state, { payload }) => {});
     builder.addCase(createFolder.rejected, (state, { payload }) => {
-      console.log("failed");
+      toast.error("Failed to add folder");
     });
 
     builder.addCase(deleteFolder.fulfilled, (state, { payload }) => {
+      toast.success("Folder Deleted");
       state.folderList = payload;
     });
-    builder.addCase(deleteFolder.pending, (state, { payload }) => {
-      console.log("loading");
-    });
+    builder.addCase(deleteFolder.pending, (state, { payload }) => {});
     builder.addCase(deleteFolder.rejected, (state, { payload }) => {
-      console.log("failed");
+      toast.error("Failed to delete folder");
     });
 
     builder.addCase(findFolder.fulfilled, (state, { payload }) => {
@@ -68,11 +67,9 @@ const folderSlice = createSlice({
       }
       state.folderList = payload;
     });
-    builder.addCase(findFolder.pending, (state, { payload }) => {
-      console.log("loading");
-    });
+    builder.addCase(findFolder.pending, (state, { payload }) => {});
     builder.addCase(findFolder.rejected, (state, { payload }) => {
-      console.log("failed");
+      toast.error("Failed to fetch folders");
     });
   },
 });

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Axios from "../../Axios/axios";
+import { toast } from "react-toastify";
 
 const initialState = {
   isAuthReady: false,
@@ -56,6 +57,7 @@ const userSlice = createSlice({
     clearUser: (state, { payload }) => {
       state.userObj = null;
       sessionStorage.removeItem("userObj");
+      toast.success("Logout sucessful");
     },
     clearAuthError: (state, { payload }) => {
       state.Error = null;
@@ -66,6 +68,7 @@ const userSlice = createSlice({
       state.userObj = payload;
       state.loading = false;
       state.Error = null;
+      toast.success("Login sucessful");
     });
     builder.addCase(loginUser.pending, (state, { payload }) => {
       state.loading = true;
@@ -73,19 +76,21 @@ const userSlice = createSlice({
     builder.addCase(loginUser.rejected, (state, { payload }) => {
       state.Error = payload;
       state.loading = false;
+      toast.success("Login Failed");
     });
 
     builder.addCase(signupUser.fulfilled, (state, { payload }) => {
       state.userObj = payload;
       state.Error = null;
       state.loading = false;
+      toast.success("Singnup sucessful");
     });
     builder.addCase(signupUser.rejected, (state, { payload }) => {
       state.Error = payload;
       state.loading = false;
+      toast.success("Singnup failed");
     });
     builder.addCase(signupUser.pending, (state, { payload }) => {
-      console.log("signup loading...");
       state.loading = true;
     });
   },

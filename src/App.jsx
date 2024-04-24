@@ -9,6 +9,8 @@ import { Home } from "./Pages/Home/Home";
 import { NotFound } from "./Pages/NotFound";
 import { useEffect } from "react";
 import { setCachedUser } from "./redux/features/userSlice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const App = () => {
   const isLoggedIn = !!useSelector((state) => state.userReducer.userObj);
@@ -36,6 +38,7 @@ export const App = () => {
   return (
     <div>
       <RouterProvider router={routes} />
+      <ToastContainer position="bottom-right" autoClose={2000} stacked/>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Axios from "../../Axios/axios";
+import { toast } from "react-toastify";
 
 const initialState = {
   completed: [],
@@ -90,38 +91,44 @@ const todoSlice = createSlice({
       return updatedState;
     });
 
-    builder.addCase(fetchTodos.pending, (state, { payload }) => {
-      console.log("pending");
+    builder.addCase(fetchTodos.rejected, (state, { payload }) => {
+      toast.error("Failed to fetch tasks");
     });
+
+    builder.addCase(fetchTodos.pending, (state, { payload }) => {});
 
     builder.addCase(toogleTodos.fulfilled, (state, { payload }) => {
-      console.log("fulfilled");
     });
 
-    builder.addCase(toogleTodos.pending, (state, { payload }) => {
-      console.log("pending");
+    builder.addCase(toogleTodos.rejected, (state, { payload }) => {
+      toast.error("Failed to update task");
     });
+
+    builder.addCase(toogleTodos.pending, (state, { payload }) => {});
 
     builder.addCase(createTodos.fulfilled, (state, { payload }) => {
       state.pending = payload;
+      toast.success("Task added");
     });
 
-    builder.addCase(createTodos.pending, (state, { payload }) => {
-      console.log("pending");
+    builder.addCase(createTodos.pending, (state, { payload }) => {});
+    builder.addCase(createTodos.rejected, (state, { payload }) => {
+      toast.error("Failed to create task");
     });
 
     builder.addCase(deleteTodos.fulfilled, (state, { payload }) => {
-      console.log("fulfilled");
       if (payload.areCompleted) {
         state.completed = payload.todos;
       } else {
         state.pending = payload.todos;
       }
+      toast.success("Task deleted");
+    });
+    builder.addCase(deleteTodos.rejected, (state, { payload }) => {
+      toast.error("Failed to delete task");
     });
 
-    builder.addCase(deleteTodos.pending, (state, { payload }) => {
-      console.log("pending");
-    });
+    builder.addCase(deleteTodos.pending, (state, { payload }) => {});
   },
 });
 
