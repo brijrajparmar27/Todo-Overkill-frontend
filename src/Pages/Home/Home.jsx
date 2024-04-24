@@ -97,6 +97,7 @@ export const Home = () => {
       <motion.div
         className="flex-1 max-h-[30%] gradient flex justify-center"
         initial={{ y: -100 }}
+        viewport={{ once: true }}
         animate={{ y: 0 }}
       >
         <div className="w-4/5 h-fit mt-10 flex justify-between items-center">
@@ -148,7 +149,7 @@ export const Home = () => {
             className="min-h-[300px] p-5 flex flex-col overflow-x-hidden"
             layout
           >
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               {pending?.length > 0 && (
                 <motion.div
                   layout
@@ -172,7 +173,7 @@ export const Home = () => {
               )}
             </AnimatePresence>
 
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               {completed?.length > 0 && (
                 <motion.div
                   layout
