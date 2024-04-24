@@ -76,7 +76,7 @@ const userSlice = createSlice({
     builder.addCase(loginUser.rejected, (state, { payload }) => {
       state.Error = payload;
       state.loading = false;
-      toast.success("Login Failed");
+      toast.error("Login Failed");
     });
 
     builder.addCase(signupUser.fulfilled, (state, { payload }) => {
@@ -88,7 +88,7 @@ const userSlice = createSlice({
     builder.addCase(signupUser.rejected, (state, { payload }) => {
       state.Error = payload;
       state.loading = false;
-      toast.success("Singnup failed");
+      toast.error("Singnup failed");
     });
     builder.addCase(signupUser.pending, (state, { payload }) => {
       state.loading = true;

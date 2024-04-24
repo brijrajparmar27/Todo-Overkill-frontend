@@ -97,8 +97,7 @@ const todoSlice = createSlice({
 
     builder.addCase(fetchTodos.pending, (state, { payload }) => {});
 
-    builder.addCase(toogleTodos.fulfilled, (state, { payload }) => {
-    });
+    builder.addCase(toogleTodos.fulfilled, (state, { payload }) => {});
 
     builder.addCase(toogleTodos.rejected, (state, { payload }) => {
       toast.error("Failed to update task");
