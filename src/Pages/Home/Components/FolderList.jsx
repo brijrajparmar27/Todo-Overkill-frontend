@@ -13,7 +13,6 @@ export const FolderList = ({ folderText }) => {
 
   const handleDelete = async (folderId) => {
     const searchText = folderText;
-    console.log(searchText);
     dispatch(deleteFolder({ folderId, searchText }));
   };
 

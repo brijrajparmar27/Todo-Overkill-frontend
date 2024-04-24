@@ -19,7 +19,6 @@ export const FolderSwitcher = ({ toogleShow }) => {
       dispatch(findFolder(folderText));
     }, 250);
     return () => {
-      console.log("destructor");
       clearTimeout(timer);
     };
   }, [folderText]);

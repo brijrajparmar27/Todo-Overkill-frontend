@@ -71,7 +71,6 @@ const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(loginUser.rejected, (state, { payload }) => {
-      console.log("rejected in thunk ", payload);
       state.Error = payload;
       state.loading = false;
     });
@@ -82,7 +81,6 @@ const userSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(signupUser.rejected, (state, { payload }) => {
-      console.log("rejected in thunk ", payload);
       state.Error = payload;
       state.loading = false;
     });

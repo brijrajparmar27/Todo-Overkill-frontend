@@ -8,14 +8,12 @@ const initialState = {
 
 export const createFolder = createAsyncThunk("folder/create", async (name) => {
   const folder = (await Axios.post("folder/add", { name })).data;
-  console.log(folder);
   return folder;
 });
 
 export const deleteFolder = createAsyncThunk(
   "folder/delete",
   async ({ folderId, searchText }) => {
-    console.log({ folderId, searchText });
     const folderList = (
       await Axios.delete(`folder/${folderId}?search=${searchText}`)
     ).data;

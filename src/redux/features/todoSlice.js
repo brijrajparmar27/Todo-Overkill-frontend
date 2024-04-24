@@ -112,7 +112,6 @@ const todoSlice = createSlice({
 
     builder.addCase(deleteTodos.fulfilled, (state, { payload }) => {
       console.log("fulfilled");
-      console.log({ state, payload });
       if (payload.areCompleted) {
         state.completed = payload.todos;
       } else {
