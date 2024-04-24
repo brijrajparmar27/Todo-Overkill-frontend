@@ -152,14 +152,16 @@ export const Home = () => {
               {pending?.length > 0 && (
                 <motion.div
                   layout
-                  className=""
                   variants={sectionVariant}
                   initial="hide"
                   animate="show"
                   exit="close"
                 >
                   <p className="text-content">to do</p>
-                  <motion.div className="flex flex-col" layout>
+                  <motion.div
+                    className="flex flex-col max-h-[27vh] overflow-y-auto scrollbar"
+                    layout
+                  >
                     <AnimatePresence mode="popLayout">
                       {pending.map((each) => {
                         return <Todo each={each} key={each._id} />;
@@ -180,7 +182,10 @@ export const Home = () => {
                   exit="close"
                 >
                   <p className="text-content">done</p>
-                  <motion.div layout>
+                  <motion.div
+                    className="flex flex-col max-h-[27vh] overflow-y-auto scrollbar"
+                    layout
+                  >
                     <AnimatePresence mode="popLayout">
                       {completed.map((each) => {
                         return <Todo each={each} key={each._id} />;

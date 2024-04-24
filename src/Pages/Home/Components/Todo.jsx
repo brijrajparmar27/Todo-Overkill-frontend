@@ -45,7 +45,7 @@ const Todo = ({ each }) => {
   };
   return (
     <motion.div
-      className="flex items-center w-full justify-between px-3 h-12"
+      className="flex items-center w-full justify-between px-3 h-12 flex-shrink-0"
       variants={backdropVariant}
       initial="hide"
       animate="show"
